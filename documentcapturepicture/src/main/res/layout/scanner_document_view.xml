@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.camerakit.CameraKitView
+            android:id="@+id/camera"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="false"
+            app:camera_flash="auto"
+            app:camera_facing="back"
+            app:camera_focus="continuous"
+            app:camera_permissions="camera" />
+
+    <RelativeLayout
+            android:id="@+id/gosh"
+            android:background="@drawable/shape_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+
+
+    <RelativeLayout
+            android:id="@+id/containMessage"
+            android:visibility="gone"
+            android:layout_width="250dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/layout_message_background"
+            android:layout_height="100dp">
+        <TextView
+                android:id="@+id/txtMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@android:color/white"
+                android:layout_centerHorizontal="true"
+                android:text="exemplo"
+        />
+
+        <ImageButton
+                android:id="@+id/btnClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/close"
+                android:layout_marginTop="5dp"
+        />
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="10dp"
+    >
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btnFlash"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:fabSize="normal"
+                android:src="@drawable/flash"
+                app:borderWidth="0dp"
+                app:elevation="2dp"
+                app:backgroundTint="#b0595959"
+                app:pressedTranslationZ="12dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btnArrowRefresh"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                app:fabSize="normal"
+                android:src="@drawable/arrow_refresh"
+                app:borderWidth="0dp"
+                app:elevation="2dp"
+                app:backgroundTint="#b0595959"
+                app:pressedTranslationZ="12dp"/>
+    </LinearLayout>
+
+
+    <RelativeLayout
+            android:layout_width="90dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="match_parent">
+
+
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btnCancel"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:fabSize="normal"
+                app:borderWidth="0dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                app:backgroundTint="#b0595959"
+                android:src="@drawable/cancel"
+                android:layout_marginTop="10dp"
+                app:elevation="2dp"/>
+
+
+        <RelativeLayout
+                android:id="@+id/btnCapture"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true">
+            <android.support.design.widget.FloatingActionButton
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:fabSize="normal"
+                    app:borderWidth="0dp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    app:backgroundTint="#b0595959"
+                    app:elevation="2dp"/>
+            <android.support.design.widget.FloatingActionButton
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:fabSize="normal"
+                    app:borderWidth="0dp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    app:backgroundTint="#b0595959"
+                    app:elevation="2dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/btnReady"
+                android:visibility="gone"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+        >
+            <android.support.design.widget.FloatingActionButton
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:fabSize="normal"
+                    app:borderWidth="0dp"
+                    app:backgroundTint="#b0595959"
+                    android:src="@drawable/arrow_check"
+                    app:elevation="2dp"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+               android:id="@+id/previewImage"
+                 android:layout_centerVertical="true"
+               android:layout_centerHorizontal="true"
+               android:visibility="gone"
+    />
+
+</RelativeLayout>

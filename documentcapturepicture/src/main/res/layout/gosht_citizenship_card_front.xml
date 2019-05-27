@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineDocumentNumberLeft"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.15"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineDocumentNumberRight"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.54"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineDocumentNumberTop"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.25"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineDocumentNumberBottom"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.41"/>
+
+    <gcatech.net.documentcapturepicture.customviews.MappingRectangleCustomView
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            app:propName="documentNumber"
+            app:codeBarMapping="false"
+            android:background="#604CAF50"
+            app:layout_constraintLeft_toRightOf="@id/guideLineVerticalLineDocumentNumberLeft"
+            app:layout_constraintRight_toLeftOf="@id/guideLineVerticalLineDocumentNumberRight"
+            app:layout_constraintTop_toBottomOf="@id/guideLineVerticalLineDocumentNumberTop"
+            app:layout_constraintBottom_toTopOf="@id/guideLineVerticalLineDocumentNumberBottom"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineNamesLeft"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.054"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineNamesRight"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.47"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineNameTop"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.36"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineNameBottom"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.48"/>
+
+    <gcatech.net.documentcapturepicture.customviews.MappingRectangleCustomView
+            android:layout_height="89dp"
+            android:layout_width="0dp"
+            app:propName="firtsName"
+            app:codeBarMapping="false"
+            android:background="#8A00BCD4"
+            app:layout_constraintLeft_toRightOf="@id/guideLineVerticalLineNamesLeft"
+            app:layout_constraintRight_toLeftOf="@id/guideLineVerticalLineNamesRight"
+            app:layout_constraintTop_toBottomOf="@id/guideLineVerticalLineNameTop"
+            app:layout_constraintBottom_toTopOf="@id/guideLineVerticalLineNameBottom"/>
+
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineLastNameTop"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.50"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineLatNameBottom"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.62"/>
+
+    <gcatech.net.documentcapturepicture.customviews.MappingRectangleCustomView
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            app:propName="lastName"
+            app:codeBarMapping="false"
+            android:background="#8A00BCD4"
+            app:layout_constraintLeft_toRightOf="@id/guideLineVerticalLineNamesLeft"
+            app:layout_constraintRight_toLeftOf="@id/guideLineVerticalLineNamesRight"
+            app:layout_constraintTop_toBottomOf="@id/guideLineVerticalLineLastNameTop"
+            app:layout_constraintBottom_toTopOf="@id/guideLineVerticalLineLatNameBottom"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLinePictureLeft"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.58"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLinePictureRight"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLinePictureTop"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.20"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLinePictureBottom"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.84"/>
+
+    <gcatech.net.documentcapturepicture.customviews.MappingRectangleCustomView
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            app:propName="photo"
+            android:background="#5CFF0101"
+            app:codeBarMapping="false"
+            app:layout_constraintLeft_toRightOf="@id/guideLineVerticalLinePictureLeft"
+            app:layout_constraintRight_toLeftOf="@id/guideLineVerticalLinePictureRight"
+            app:layout_constraintTop_toBottomOf="@id/guideLineVerticalLinePictureTop"
+            app:layout_constraintBottom_toTopOf="@id/guideLineVerticalLinePictureBottom"/>
+
+</android.support.constraint.ConstraintLayout>
