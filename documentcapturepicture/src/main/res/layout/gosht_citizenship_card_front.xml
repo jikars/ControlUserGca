@@ -71,7 +71,7 @@
             app:layout_constraintGuide_percent="0.48"/>
 
     <gcatech.net.documentcapturepicture.customviews.MappingRectangleCustomView
-            android:layout_height="89dp"
+            android:layout_height="0dp"
             android:layout_width="0dp"
             app:propName="firtsName"
             app:codeBarMapping="false"

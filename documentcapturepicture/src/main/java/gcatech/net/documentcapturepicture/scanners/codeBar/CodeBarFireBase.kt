@@ -18,17 +18,15 @@ class CodeBarFireBase : ICodeBarScanner {
         detectorCodeBar = FirebaseVision.getInstance().getVisionBarcodeDetector(options)
 
     }
-    override fun scan(bitmap: Bitmap): String? {
-        var resultMap  : String?= null
+    override fun scan(bitmap: Bitmap, resultCodeBar: IResultCodeBar){
         val image = FirebaseVisionImage.fromBitmap(bitmap)
         val result = detectorCodeBar.detectInImage(image)!!
         result.addOnSuccessListener { barcode  ->
             if(barcode?.size!! > 0){
-                resultMap = barcode[0].rawValue!!
+                resultCodeBar.resultCodeBar(barcode[0].rawValue)
             }
         }.addOnFailureListener {
-            resultMap =null
-        }.result
-        return  resultMap
+            resultCodeBar.resultCodeBar(null)
+        }
     }
 }

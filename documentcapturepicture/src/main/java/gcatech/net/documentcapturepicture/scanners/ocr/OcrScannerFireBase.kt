@@ -9,20 +9,18 @@ class OcrScannerFireBase : IOcrScanner {
 
     private  var detectorOcr  : FirebaseVisionTextRecognizer = FirebaseVision.getInstance().onDeviceTextRecognizer
 
-    override fun scan(bitmap: Bitmap): String? {
-        var resultMap  : String?= null
+    override fun scan(bitmap: Bitmap, resultOcr : IResultOcr) {
+
         val image = FirebaseVisionImage.fromBitmap(bitmap)
 
         detectorOcr.processImage(image)
             .addOnSuccessListener { textResult ->
                 if(textResult != null && !textResult.text.isNullOrEmpty()){
-                    resultMap = textResult.text
+                    resultOcr.resulOcr(textResult.text)
                 }
             }
             .addOnFailureListener {
-                resultMap = null
-            }.result
-
-        return  resultMap;
+                resultOcr.resulOcr(null)
+            }
     }
 }

@@ -16,6 +16,7 @@ import java.lang.reflect.Type
 import java.util.*
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.widget.Toast
 import gcatech.net.documentcapturepicture.annotations.Key
 import gcatech.net.documentcapturepicture.annotations.MapValue
 import gcatech.net.documentcapturepicture.enums.ScannerMode
@@ -24,7 +25,8 @@ import gcatech.net.documentcapturepicture.webServices.IWebService
 
 
 class CaptureDocument @JvmOverloads  constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int = 0 )
-    : RelativeLayout(context,attrs,defStyleAttr) {
+    : RelativeLayout(context,attrs,defStyleAttr), INotifyCompleteScanner {
+
 
 
     private  lateinit var  pictureFrontBitMap : Bitmap
@@ -47,8 +49,10 @@ class CaptureDocument @JvmOverloads  constructor(context: Context?, attrs: Attri
         elementDocumentBack = arrayListOf()
         assignableBitmap =  mutableMapOf()
         documentsScanner = mutableMapOf()
-        assignableBitmap[true] = { bitmap :Bitmap->  assignableFront(bitmap) }
-        assignableBitmap[false] = { bitmap :Bitmap->  assignableBack(bitmap) }
+        if(assignableBitmap.isEmpty()){
+            assignableBitmap[true] = { bitmap :Bitmap->  assignableFront(bitmap) }
+            assignableBitmap[false] = { bitmap :Bitmap->  assignableBack(bitmap) }
+        }
     }
 
     fun <T :ModelDocument,TInterpreter : IInterpreter<T>, TWebServer :IWebService<T>>config(type : Class<T>, typeInterpreter : Class<TInterpreter>,webServiceType: Class<TWebServer>,
@@ -107,6 +111,7 @@ class CaptureDocument @JvmOverloads  constructor(context: Context?, attrs: Attri
                 gothsBack.layoutParams = LayoutParams(MATCH_PARENT,MATCH_PARENT)
                 previewImage.layoutParams.height = height.toInt()
                 previewImage.layoutParams.width = wight.toInt()
+                gosh.removeAllViews()
                 gosh.addView(gothsFront)
             }
         })
@@ -116,10 +121,9 @@ class CaptureDocument @JvmOverloads  constructor(context: Context?, attrs: Attri
     {
         pictureFrontBitMap = bitmap
         elementDocumentFront.forEach{
-            it.crop(pictureFrontBitMap)
-            it.scan(ScannerMode.Ocr)
+            it.crop(pictureFrontBitMap,this,true)
         }
-        scanOcr(elementDocumentFront)
+        gosh.removeAllViews()
         gosh.addView(gothsBack)
         gothsBack.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -138,16 +142,9 @@ class CaptureDocument @JvmOverloads  constructor(context: Context?, attrs: Attri
     {
         pictureBackBitMap = bitmap
         elementDocumentBack.forEach{
-            it.crop(pictureBackBitMap)
-            it.scan(ScannerMode.Ocr)
+            it.crop(pictureBackBitMap,this,false)
         }
 
-        scanOcr(elementDocumentBack)
-
-        val documentCodeBar = elementDocumentBack.first{it.isCodeBarScanner}
-
-        scanCodeBar(documentCodeBar.scan(ScannerMode.CodeBar)!!)
-        scanWebService()
     }
 
     private fun scanCodeBar(resultCodeBar : String ) {
@@ -172,6 +169,18 @@ class CaptureDocument @JvmOverloads  constructor(context: Context?, attrs: Attri
         val field = type.javaClass.declaredFields.first { it.isAnnotationPresent(Key::class.java) }
         val key =  field.get(documentsScanner[ScannerMode.Ocr])
         documentsScanner[ScannerMode.WebService] = webServiceInstance.getDocument(key)
+    }
+
+    override fun scanOcrResult(isFront :Boolean,ocr:String?) {
+        if(!ocr.isNullOrEmpty()){
+            Toast.makeText(context,ocr,Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun scanCodeBarResult(codeBar: String?) {
+        if(!codeBar.isNullOrEmpty()){
+            Toast.makeText(context,codeBar,Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun onStart(){

@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:312601657973:android:3b596aef328c6bbc",
+        "android_client_info": {
+          "package_name": "gcatech.net.documentcapture"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312601657973-fa8p07uqud1rgit77t6jd07r5vktp2dq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDerpH7VoRb18KSM3ST76TUe6S6NLxjfGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "312601657973-fa8p07uqud1rgit77t6jd07r5vktp2dq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:312601657973:android:11c2f9e2859161a6",
         "android_client_info": {
           "package_name": "gcatech.net.documentcapturepicture"
