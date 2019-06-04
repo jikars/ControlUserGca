@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="blue_light">#00ADEF</color>
+    <color name="blue_border">#0099D8</color>
+
+    <color name="white">#ffff</color>
+    <color name="blue">#2c3b58</color>
+    <color name="indicatorOk">#3aab14</color>
+    <color name="indicatorMedium">#c98d0d</color>
+    <color name="indicatorSlow">#c9160d</color>
+    <color name="graybackgroundbutton">#E6E7EB</color>
+    <color name="graytexthint">#c9c9c9</color>
+    <color name="graytextready">#9c9c9c</color>5CFF0101
+    <color name="backgroundCrp">#c9c9c9</color>
+
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             android:id="@+id/containerInputModeview"
+                                             android:layout_width="70dp"
+                                             android:visibility="gone"
+                                             android:layout_height="40dp">
+
+    <Button
+            android:id="@+id/btnMod"
+            android:padding="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@android:color/white"
+            android:background="@drawable/input_mode_background_style"
+            android:textSize="12sp"
+            android:layout_marginLeft="5dp"
+            android:text="CODE BAR"
+    />
+
+</android.support.constraint.ConstraintLayout>

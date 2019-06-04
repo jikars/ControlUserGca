@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineFingerPrintLeft"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.03"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineFingerPrintRight"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.33"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineFingerPrintNumberTop"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.065"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineFingerPrintBottom"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.51"/>
+
+    <gcatech.net.documentcapturepicture.customviews.MappingRectangleCustomView
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        app:propName="fingerPrint"
+        app:fingerPrint="true"
+        app:codeBarMapping="false"
+        android:background="@color/backgroundCrp"
+        app:layout_constraintLeft_toRightOf="@id/guideLineVerticalLineFingerPrintLeft"
+        app:layout_constraintRight_toLeftOf="@id/guideLineVerticalLineFingerPrintRight"
+        app:layout_constraintBottom_toTopOf="@+id/guideLineVerticalLineFingerPrintBottom"
+        app:layout_constraintTop_toBottomOf="@id/guideLineVerticalLineFingerPrintNumberTop"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineBirthPlaceLeft"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.37"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineBirthPlaceRight"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.625"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineBirthPlaceTop"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.10"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineBirthPlaceBottom"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.23"/>
+
+
+    <gcatech.net.documentcapturepicture.customviews.MappingRectangleCustomView
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            app:propName="birthPlace"
+            app:codeBarMapping="false"
+            android:background="@color/backgroundCrp"
+            app:layout_constraintLeft_toRightOf="@id/guideLineVerticalLineBirthPlaceLeft"
+            app:layout_constraintRight_toLeftOf="@id/guideLineVerticalLineBirthPlaceRight"
+            app:layout_constraintBottom_toTopOf="@+id/guideLineVerticalLineBirthPlaceBottom"
+            app:layout_constraintTop_toBottomOf="@id/guideLineVerticalLineBirthPlaceTop"/>
+
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineBirthDateLeft"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.65"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineBirthDateRight"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.875"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineBirthDateTop"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.055"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineBirthDateBottom"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.13"/>
+
+
+    <gcatech.net.documentcapturepicture.customviews.MappingRectangleCustomView
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            app:propName="birthDate"
+            app:codeBarMapping="false"
+            android:background="@color/backgroundCrp"
+            app:layout_constraintLeft_toRightOf="@id/guideLineVerticalLineBirthDateLeft"
+            app:layout_constraintRight_toLeftOf="@id/guideLineVerticalLineBirthDateRight"
+            app:layout_constraintBottom_toTopOf="@+id/guideLineVerticalLineBirthDateBottom"
+            app:layout_constraintTop_toBottomOf="@id/guideLineVerticalLineBirthDateTop"/>
+
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineStatureLeft"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.375"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineStatureRight"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineStatureTop"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.28"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineStatureBottom"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.35"/>
+
+
+
+    <gcatech.net.documentcapturepicture.customviews.MappingRectangleCustomView
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            app:propName="stature"
+            app:codeBarMapping="false"
+            android:background="@color/backgroundCrp"
+            app:layout_constraintLeft_toRightOf="@id/guideLineVerticalLineStatureLeft"
+            app:layout_constraintRight_toLeftOf="@id/guideLineVerticalLineStatureRight"
+            app:layout_constraintBottom_toTopOf="@+id/guideLineVerticalLineStatureBottom"
+            app:layout_constraintTop_toBottomOf="@id/guideLineVerticalLineStatureTop"/>
+
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineRhLeft"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.53"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineRhRight"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.66"/>
+
+    <gcatech.net.documentcapturepicture.customviews.MappingRectangleCustomView
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            app:propName="rh"
+            app:codeBarMapping="false"
+            android:background="@color/backgroundCrp"
+            app:layout_constraintLeft_toRightOf="@id/guideLineVerticalLineRhLeft"
+            app:layout_constraintRight_toLeftOf="@id/guideLineVerticalLineRhRight"
+            app:layout_constraintBottom_toTopOf="@+id/guideLineVerticalLineStatureBottom"
+            app:layout_constraintTop_toBottomOf="@id/guideLineVerticalLineStatureTop"/>
+
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineGenderLeft"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.71"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineGenderRight"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.81"/>
+
+    <gcatech.net.documentcapturepicture.customviews.MappingRectangleCustomView
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            app:propName="gender"
+            app:codeBarMapping="false"
+            android:background="@color/backgroundCrp"
+            app:layout_constraintLeft_toRightOf="@id/guideLineVerticalLineGenderLeft"
+            app:layout_constraintRight_toLeftOf="@id/guideLineVerticalLineGenderRight"
+            app:layout_constraintBottom_toTopOf="@+id/guideLineVerticalLineStatureBottom"
+            app:layout_constraintTop_toBottomOf="@id/guideLineVerticalLineStatureTop"/>
+
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineExpeditionPlaceLeft"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.37"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineExpeditionPlaceRight"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.72"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineExpeditionPlaceTop"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.40"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineExpeditionPlaceBottom"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.47"/>
+
+    <gcatech.net.documentcapturepicture.customviews.MappingRectangleCustomView
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            app:propName="expeditionPlaceAndDate"
+            app:codeBarMapping="false"
+            android:background="@color/backgroundCrp"
+            app:layout_constraintLeft_toRightOf="@id/guideLineVerticalLineExpeditionPlaceLeft"
+            app:layout_constraintRight_toLeftOf="@id/guideLineVerticalLineExpeditionPlaceRight"
+            app:layout_constraintBottom_toTopOf="@+id/guideLineVerticalLineExpeditionPlaceBottom"
+            app:layout_constraintTop_toBottomOf="@id/guideLineVerticalLineExpeditionPlaceTop"/>
+
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineCodeBarPlaceLeft"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.042"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineCodeBarRight"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.96"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineCodeBarTop"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.619"/>
+
+    <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideLineVerticalLineCodeBarBottom"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.89"/>
+
+    <gcatech.net.documentcapturepicture.customviews.MappingRectangleCustomView
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            app:propName="codeBar"
+            app:codeBarMapping="true"
+            android:background="@color/backgroundCrp"
+            app:layout_constraintLeft_toRightOf="@id/guideLineVerticalLineCodeBarPlaceLeft"
+            app:layout_constraintRight_toLeftOf="@id/guideLineVerticalLineCodeBarRight"
+            app:layout_constraintBottom_toTopOf="@+id/guideLineVerticalLineCodeBarBottom"
+            app:layout_constraintTop_toBottomOf="@id/guideLineVerticalLineCodeBarTop"/>
+
+
+</android.support.constraint.ConstraintLayout>

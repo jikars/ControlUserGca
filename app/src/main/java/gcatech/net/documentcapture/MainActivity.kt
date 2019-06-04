@@ -18,8 +18,8 @@ class MainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
-        capturePicture.config(CitizenshipCard::class.java,CitizenshipCardInterpreter::class.java, CitizenShipCardWebService::class.java,
-            R.layout.gosht_citizenship_card_front,R.layout.gosht_citizenship_card_front)
+        capturePicture.config(CitizenshipCard::class,CitizenshipCardInterpreter::class.java, CitizenShipCardWebService::class.java,
+            R.layout.gosht_citizenship_card_front,R.layout.gosht_citizenship_card_back)
     }
 
     override fun onStart() {

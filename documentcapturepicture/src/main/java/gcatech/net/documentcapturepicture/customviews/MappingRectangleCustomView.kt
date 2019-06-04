@@ -17,13 +17,14 @@ import gcatech.net.documentcapturepicture.scanners.ocr.OcrScannerFireBase
 class MappingRectangleCustomView   @JvmOverloads  constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int = 0 )
     : RelativeLayout(context,attrs,defStyleAttr), IResultCodeBar,IResultOcr {
 
-    private var bitmapCrop : Bitmap? = null
+    var bitmapCrop : Bitmap? = null
     var  propName : String
     private  var  value : String?  = null
     var  valueOcr : String?  = null
     var  isCodeBarScanner :  Boolean = false
+    var  isFingerPrint :  Boolean = false
+
     private  var  mappingTypes : MutableMap<ScannerMode,(Bitmap?) -> Unit>
-    private  var  enabledMappingCodeBar :  Boolean = false
     private   var   ocrScanner: IOcrScanner = OcrScannerFireBase()
     private  lateinit  var   notify:INotifyCompleteScanner
     private   var   codeBarScanner: ICodeBarScanner = CodeBarFireBase()
@@ -33,6 +34,8 @@ class MappingRectangleCustomView   @JvmOverloads  constructor(context: Context?,
         val attributes  = context?.obtainStyledAttributes(attrs, R.styleable.MappingRectangleCustomView)
         propName = attributes?.getString(R.styleable.MappingRectangleCustomView_propName)!!
         isCodeBarScanner = attributes.getBoolean(R.styleable.MappingRectangleCustomView_codeBarMapping,false)
+       isFingerPrint = attributes.getBoolean(R.styleable.MappingRectangleCustomView_fingerPrint,false)
+
         attributes.recycle()
         mappingTypes = mutableMapOf()
         mappingTypes[ScannerMode.CodeBar] = { bitmap :Bitmap?->   scanForCodeBar(bitmap) }
@@ -40,25 +43,33 @@ class MappingRectangleCustomView   @JvmOverloads  constructor(context: Context?,
     }
 
     fun crop(bitmapPattern : Bitmap, notify: INotifyCompleteScanner, isFront : Boolean ){
-        this.notify = notify
-        this.isFront = isFront
-        bitmapCrop = Bitmap.createBitmap(
-            bitmapPattern,
-            this.x.toInt(),
-            this.y.toInt(),
-            this.width,
-            this.height
-        )
+      try{
+          this.notify = notify
+          this.isFront = isFront
+          bitmapCrop = Bitmap.createBitmap(
+              bitmapPattern,
+              Math.round(this.x),
+              Math.round(this.y),
+              this.width,
+              this.height
+          )
 
-        scanForOcr(bitmapCrop)
-        if(isCodeBarScanner){
-            scanForCodeBar(bitmapCrop)
-        }
+          if(isCodeBarScanner && !isFingerPrint){
+              scanForCodeBar(bitmapCrop)
+          }
+          else if(!isFingerPrint){
+
+              scanForOcr(bitmapCrop)
+          }
+      }
+      catch (ex : Exception){
+          throw  ex
+      }
     }
 
 
     private fun scanForCodeBar(bitmap: Bitmap?){
-        if(enabledMappingCodeBar && isCodeBarScanner && bitmap != null){
+        if(isCodeBarScanner && bitmap != null){
             codeBarScanner.scan(bitmap,this)
         }
     }
@@ -80,7 +91,7 @@ class MappingRectangleCustomView   @JvmOverloads  constructor(context: Context?,
         if(!result.isNullOrEmpty()){
             valueOcr = result
             value = result
-            notify.scanOcrResult(isFront,value)
+            notify.scanOcrResult(isFront,value,propName)
         }
     }
 

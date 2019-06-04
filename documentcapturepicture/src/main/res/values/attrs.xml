@@ -3,5 +3,7 @@
     <declare-styleable name="MappingRectangleCustomView">
         <attr name="propName" format="string" />
         <attr name="codeBarMapping" format="boolean" />
-    </declare-styleable>>
+        <attr name="fingerPrint" format="boolean" />
+        <attr name="identifier" format="boolean" />
+    </declare-styleable>
 </resources>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
+                android:id="@+id/scannerContainer"
                 android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.camerakit.CameraKitView
             android:id="@+id/camera"
@@ -9,6 +10,7 @@
             android:adjustViewBounds="false"
             app:camera_flash="auto"
             app:camera_facing="back"
+            app:camera_aspectRatio="1.3"
             app:camera_focus="continuous"
             app:camera_permissions="camera" />
 

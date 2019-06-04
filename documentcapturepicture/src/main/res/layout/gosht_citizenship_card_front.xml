@@ -8,7 +8,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/guideLineVerticalLineDocumentNumberLeft"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.15"/>
+            app:layout_constraintGuide_percent="0.16"/>
 
     <android.support.constraint.Guideline
             android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
             android:layout_width="0dp"
             app:propName="documentNumber"
             app:codeBarMapping="false"
-            android:background="#604CAF50"
+            android:background="@color/backgroundCrp"
             app:layout_constraintLeft_toRightOf="@id/guideLineVerticalLineDocumentNumberLeft"
             app:layout_constraintRight_toLeftOf="@id/guideLineVerticalLineDocumentNumberRight"
             app:layout_constraintTop_toBottomOf="@id/guideLineVerticalLineDocumentNumberTop"
@@ -73,9 +73,9 @@
     <gcatech.net.documentcapturepicture.customviews.MappingRectangleCustomView
             android:layout_height="0dp"
             android:layout_width="0dp"
-            app:propName="firtsName"
+            app:propName="lastName"
             app:codeBarMapping="false"
-            android:background="#8A00BCD4"
+            android:background="@color/backgroundCrp"
             app:layout_constraintLeft_toRightOf="@id/guideLineVerticalLineNamesLeft"
             app:layout_constraintRight_toLeftOf="@id/guideLineVerticalLineNamesRight"
             app:layout_constraintTop_toBottomOf="@id/guideLineVerticalLineNameTop"
@@ -99,9 +99,9 @@
     <gcatech.net.documentcapturepicture.customviews.MappingRectangleCustomView
             android:layout_height="0dp"
             android:layout_width="0dp"
-            app:propName="lastName"
+            app:propName="firtsName"
             app:codeBarMapping="false"
-            android:background="#8A00BCD4"
+            android:background="@color/backgroundCrp"
             app:layout_constraintLeft_toRightOf="@id/guideLineVerticalLineNamesLeft"
             app:layout_constraintRight_toLeftOf="@id/guideLineVerticalLineNamesRight"
             app:layout_constraintTop_toBottomOf="@id/guideLineVerticalLineLastNameTop"
@@ -139,7 +139,7 @@
             android:layout_height="0dp"
             android:layout_width="0dp"
             app:propName="photo"
-            android:background="#5CFF0101"
+            android:background="@color/backgroundCrp"
             app:codeBarMapping="false"
             app:layout_constraintLeft_toRightOf="@id/guideLineVerticalLinePictureLeft"
             app:layout_constraintRight_toLeftOf="@id/guideLineVerticalLinePictureRight"
