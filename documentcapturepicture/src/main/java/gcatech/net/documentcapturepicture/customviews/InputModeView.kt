@@ -26,15 +26,16 @@ class InputModeView  @JvmOverloads  constructor(context: Context?, attrs: Attrib
         this.value = value
         btnMod.text = inputType.labelText
         if(this.value.isNullOrEmpty()){
-            this.isEnabled = false
+            visibility = View.GONE
+            return
         }
-        if( this.value != null){
-            this.value = value
-            this.isEnabled = true
-        }
+        this.value = value
+        visibility = View.VISIBLE
         btnMod.setOnClickListener{
-                inputField.changeSelect(inputType, this.value)
+            inputField.changeSelect(inputType, this.value)
         }
+
+
     }
 
 }

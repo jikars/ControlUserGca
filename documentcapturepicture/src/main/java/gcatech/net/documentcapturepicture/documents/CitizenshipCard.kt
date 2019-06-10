@@ -28,7 +28,7 @@ class CitizenshipCard : Document() {
       var birthDate: String? = null
 
       @MapValue("stature")
-      @LabelTitle("Statura")
+      @LabelTitle("Estatura")
       var stature: String? = null
 
       @MapValue("rh")

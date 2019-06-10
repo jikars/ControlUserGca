@@ -21,6 +21,7 @@ import gcatech.net.documentcapturepicture.interpreters.IInterpreter
 import gcatech.net.documentcapturepicture.webServices.IWebService
 import android.graphics.Matrix
 import gcatech.net.documentcapturepicture.documents.DocumentScannerResult
+import gcatech.net.documentcapturepicture.utils.DoAsync
 import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.createInstance
@@ -66,6 +67,8 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
         this.type = type
         this.typeInterpreter = typeInterpreter
         this.webServiceType = webServiceType
+        this.handleResult = handleResult
+
         generateInstanceTypes()
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -119,6 +122,7 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
             generateInstanceTypes()
             btnReady.visibility = View.GONE
             btnCapture.visibility = View.VISIBLE
+            camera.restart()
         }
 
         btnCancel.setOnClickListener{
@@ -143,8 +147,10 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
 
                 scannerContainer.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 initialCharge()
+                camera.start()
             }
         })
+
     }
 
     private fun  initialCharge(){
@@ -156,6 +162,7 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
         gosh.layoutParams = layoutParams
         gothsFront.layoutParams = LayoutParams(MATCH_PARENT,MATCH_PARENT)
         gothsBack.layoutParams = LayoutParams(MATCH_PARENT,MATCH_PARENT)
+        gosh.removeAllViews()
         gosh.addView(gothsFront)
         gosh.addView(gothsBack)
         gothsFront.visibility = View.VISIBLE
@@ -163,11 +170,13 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
     }
 
     private fun generateInstanceTypes(){
-        interpreterInstance = typeInterpreter.newInstance() as IInterpreter<*>
-        webServiceInstance = webServiceType.newInstance() as IWebService<*>
-        documentsScanner[ScannerMode.Ocr] = type.createInstance() as Document
-        documentsScanner[ScannerMode.CodeBar] = type.createInstance() as Document
-        documentsScanner[ScannerMode.WebService] = type.createInstance() as Document
+        DoAsync{
+            interpreterInstance = typeInterpreter.newInstance() as IInterpreter<*>
+            webServiceInstance = webServiceType.newInstance() as IWebService<*>
+            documentsScanner[ScannerMode.Ocr] = type.createInstance() as Document
+            documentsScanner[ScannerMode.CodeBar] = type.createInstance() as Document
+            documentsScanner[ScannerMode.WebService] = type.createInstance() as Document
+        }.execute()
     }
 
     private fun assignableFront (bitmap:Bitmap)
@@ -180,6 +189,7 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
         }
         gothsBack.visibility = View.VISIBLE
         gothsFront.visibility = View.INVISIBLE
+        camera.restart()
     }
 
     private fun assignableBack (bitmap:Bitmap)

@@ -1,9 +1,7 @@
 package gcatech.net.documentcapturepicture.customviews
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
-import android.content.ContextWrapper
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -15,6 +13,8 @@ import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import kotlinx.android.synthetic.main.camera_view.view.*
 import gcatech.net.documentcapturepicture.R
+import gcatech.net.documentcapturepicture.utils.UiTools
+import java.util.logging.Logger
 
 
 class ScannerCameraView @JvmOverloads  constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int = 0 )
@@ -34,20 +34,31 @@ class ScannerCameraView @JvmOverloads  constructor(context: Context?, attrs: Att
 
     init {
         LayoutInflater.from(context).inflate(R.layout.camera_view, this, true)
+        frameCameraPreview.setOnClickListener{
+            if(hasPreview){
+                try {
+                    camera.autoFocus { _, _ ->  }
+                }catch (e:Exception){
+                  Logger.getLogger(ScannerCameraView::class.java.name).severe(e.message)
+                }
+            }
+        }
     }
 
 
     fun start() {
         if(!hatInit){
+            if(hasPreview){
+                stop()
+            }
+
             initCamera()
-            camera = Camera.open()
-            hatInit = true
         }
     }
 
     fun onFlash() {
         if (context.packageManager.hasSystemFeature(
-                PackageManager.FEATURE_CAMERA_FLASH)) {
+                PackageManager.FEATURE_CAMERA_FLASH) && hasPreview) {
             val parameters = camera.parameters
             parameters.flashMode = Camera.Parameters.FLASH_MODE_TORCH
             camera.parameters = parameters
@@ -57,7 +68,7 @@ class ScannerCameraView @JvmOverloads  constructor(context: Context?, attrs: Att
 
     fun offFlash() {
         if (context.packageManager.hasSystemFeature(
-                PackageManager.FEATURE_CAMERA_FLASH)) {
+                PackageManager.FEATURE_CAMERA_FLASH) && hasPreview) {
             val parameters = camera.parameters
             parameters.flashMode = Camera.Parameters.FLASH_MODE_OFF
             camera.parameters = parameters
@@ -77,23 +88,14 @@ class ScannerCameraView @JvmOverloads  constructor(context: Context?, attrs: Att
 
     }
 
-   private  fun getActivity(): Activity? {
-        var context = context
-        while (context is ContextWrapper) {
-            if (context is Activity) {
-                return context
-            }
-            context = context.baseContext
-        }
-        return null
-    }
+
 
     private fun initCamera(){
 
         if(!hasPreview){
 
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(getActivity()!!, arrayOf(Manifest.permission.CAMERA), COD_PERMISSIONS)
+                    requestPermissions(UiTools.getActivity(context)!!, arrayOf(Manifest.permission.CAMERA), COD_PERMISSIONS)
             } else {
                 startCamera()
             }
@@ -102,7 +104,10 @@ class ScannerCameraView @JvmOverloads  constructor(context: Context?, attrs: Att
     }
 
     private fun startCamera(){
-        frameCameraPreview.removeAllViews()
+        if(frameCameraPreview.childCount>0){
+            frameCameraPreview.removeAllViews()
+
+        }
         camera = Camera.open()
 
         camera.setDisplayOrientation(0)
@@ -117,6 +122,7 @@ class ScannerCameraView @JvmOverloads  constructor(context: Context?, attrs: Att
         imageSurfaceView = ImageSurfaceView(context, camera)
         frameCameraPreview.addView(imageSurfaceView)
         hasPreview = true
+        hatInit = true
     }
 
     fun restart(){
@@ -126,8 +132,11 @@ class ScannerCameraView @JvmOverloads  constructor(context: Context?, attrs: Att
 
 
     fun onResume(){
-        if(hasPreview){
+        if(!hasPreview){
             initCamera()
+            if(hasFlash){
+                onFlash()
+            }
         }
     }
 
@@ -144,9 +153,10 @@ class ScannerCameraView @JvmOverloads  constructor(context: Context?, attrs: Att
     }
 
 
-    fun stop(){
+    private fun stop(){
         if(hasPreview){
             hatInit = false
+            hasPreview = false
             camera.stopPreview()
             camera.release()
         }

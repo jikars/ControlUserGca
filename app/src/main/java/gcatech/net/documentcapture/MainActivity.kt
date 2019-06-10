@@ -18,8 +18,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
         val fragment = DocumentScannerFragment.newInstance(CitezenshipCardConfig())
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.containFragment, fragment)
-        transaction.commit()
+        if(fragment != null){
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.containFragment, fragment)
+            transaction.commit()
+        }
+
     }
 }

@@ -32,19 +32,24 @@ class InputFieldView  @JvmOverloads  constructor(context: Context?, attrs: Attri
         this.propName = propName
         this.labelValue = labelValue !!
         inputProp.setText(labelValue, TextView.BufferType.EDITABLE)
-        val inputTypeFiled = InputModeView(context,null,0)
         this.typeScanner.forEach{
+            val inputTypeFiled = InputModeView(context,null,0)
             if(this.typeScanner.contains((it.key))){
                 inputTypeFiled.start(it.key,this,it.value)
                 inputModes[it.key] = inputTypeFiled
+                inputModeContainer.addView(inputTypeFiled)
             }
         }
-        inputModeContainer.addView(inputTypeFiled)
     }
     fun changeSelect(type : ScannerMode, value: String?){
         inputTypeSelect = type
         valueSelect = value
+        changeEdit(valueSelect)
+    }
 
-       // changeEdit(valueSelect)
+    private  fun changeEdit(changeText:String?){
+        if(changeText != null){
+            inputProp.setText(changeText, TextView.BufferType.EDITABLE)
+        }
     }
 }

@@ -32,11 +32,10 @@ class DocumentEditionView @JvmOverloads  constructor(context: Context?, attrs: A
         this.type = type
         this.scannerResults = scannerResults
 
-     /*   this.scannerResults.forEach{
-            val sca = ScannerOptionView(context,null,this.codeRequest)
-            sca.start(it.key,this.codeRequest,activity)
-            scannerOptions.addView(sca)
-        }*/
+
+        if(bottomPart.childCount > 0){
+            bottomPart.removeAllViews()
+        }
 
         this.type.declaredMemberProperties.forEach{
             if (it is KMutableProperty<*>) {
@@ -50,9 +49,6 @@ class DocumentEditionView @JvmOverloads  constructor(context: Context?, attrs: A
                 }
                 if(this.scannerResults!![ScannerMode.CodeBar] != null){
                     list[ScannerMode.CodeBar] = it.getter.call(scannerResults!![ScannerMode.CodeBar])?.toString()
-                }
-                else{
-
                 }
                 field.start(this,list,it.name,it.findAnnotation<LabelTitle>()?.labelValue)
                 if(!inputFieldDocumentViews.contains(field)){

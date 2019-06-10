@@ -28,7 +28,11 @@ class ImageSurfaceView(context: Context, private val camera: Camera) : SurfaceVi
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
-        this.camera.stopPreview()
-        this.camera.release()
+        try {
+            this.camera.stopPreview()
+            this.camera.release()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
 }
