@@ -12,6 +12,7 @@ import gcatech.net.documentcapturepicture.enums.ScannerMode
 import kotlinx.android.synthetic.main.capture_document_view.view.*
 import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty
+import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.findAnnotation
 
@@ -37,6 +38,13 @@ class DocumentEditionView @JvmOverloads  constructor(context: Context?, attrs: A
             bottomPart.removeAllViews()
         }
 
+        if(bitmapFront != null){
+            documentFront.setImageBitmap(bitmapFront)
+        }
+        if(bitmapBack != null){
+            documentBack.setImageBitmap(bitmapBack)
+        }
+
         this.type.declaredMemberProperties.forEach{
             if (it is KMutableProperty<*>) {
                 val field = InputFieldView(context,null)
@@ -59,6 +67,13 @@ class DocumentEditionView @JvmOverloads  constructor(context: Context?, attrs: A
         }
     }
 
-
-
+    fun buildDocument() : Document{
+        val document = this.type.createInstance() as Document
+        inputFieldDocumentViews.forEach{
+           val prop =  this.type.declaredMemberProperties.first{p -> p.name == it.propName && p is KMutableProperty<*>}
+            val propK = prop as KMutableProperty<*>
+            propK.setter.call(document,it.getCurrentValue())
+        }
+        return  document
+    }
 }

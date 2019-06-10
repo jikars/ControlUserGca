@@ -17,7 +17,7 @@ class InputFieldView  @JvmOverloads  constructor(context: Context?, attrs: Attri
     private var inputModes : MutableMap<ScannerMode, InputModeView>
     private lateinit var typeScanner :  MutableMap<ScannerMode,String?>
     private lateinit var documentEditionView: DocumentEditionView
-    private lateinit var propName: String
+    lateinit var propName: String
     private lateinit var labelValue: String
 
 
@@ -41,6 +41,7 @@ class InputFieldView  @JvmOverloads  constructor(context: Context?, attrs: Attri
             }
         }
     }
+
     fun changeSelect(type : ScannerMode, value: String?){
         inputTypeSelect = type
         valueSelect = value
@@ -51,5 +52,9 @@ class InputFieldView  @JvmOverloads  constructor(context: Context?, attrs: Attri
         if(changeText != null){
             inputProp.setText(changeText, TextView.BufferType.EDITABLE)
         }
+    }
+
+    fun getCurrentValue():String?{
+        return inputProp.text?.toString()
     }
 }

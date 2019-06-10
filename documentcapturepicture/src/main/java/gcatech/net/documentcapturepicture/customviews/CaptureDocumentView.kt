@@ -98,7 +98,6 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
                 val bmp = Bitmap.createBitmap(resizedBitmap, Math.round(x1), Math.round(y1), x2, y2)
                 resizedBitmap.recycle()
                 assignableBitmap.getValue(hasFront).invoke(bmp)
-                bmp.recycle()
             }
         }
 

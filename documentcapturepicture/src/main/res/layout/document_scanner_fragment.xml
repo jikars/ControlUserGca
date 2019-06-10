@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              android:layout_width="match_parent"
-                                             android:layout_height="match_parent">
+                                             android:layout_height="match_parent"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <gcatech.net.documentcapturepicture.customviews.DocumentEditionView
             android:id="@+id/documentEditView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btnConfirm"
+            android:layout_height="0dp"/>
+
+    <Button android:id="@+id/btnConfirm"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/accpet"
+    />
+    <Button android:id="@+id/btnCancel"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/cancelar"
+    />
+
     
 
 </android.support.constraint.ConstraintLayout>

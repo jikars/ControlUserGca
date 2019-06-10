@@ -147,7 +147,7 @@ class ScannerCameraView @JvmOverloads  constructor(context: Context?, attrs: Att
     }
 
     fun onRequestPermissionsResult(requestCode: Int, grantResults: IntArray){
-        if(requestCode == COD_PERMISSIONS && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if(requestCode == COD_PERMISSIONS && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
             startCamera()
         }
     }

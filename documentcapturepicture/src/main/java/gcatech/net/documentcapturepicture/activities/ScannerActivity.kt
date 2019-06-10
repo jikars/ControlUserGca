@@ -22,22 +22,30 @@ class ScannerActivity  : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.scanner_activity)
         supportActionBar?.hide()
-        scannerDocument.config(configDocument.type,configDocument.typeInterpreter,configDocument.webServiceType,configDocument.gothsFrontRes,configDocument.gothsBack){
-            this.finish()
-            handle.invoke(it)
+        if(configDocument != null){
+            scannerDocument.config(configDocument?.type!!,configDocument?.typeInterpreter!!,configDocument?.webServiceType!!,configDocument?.gothsFrontRes!!,configDocument?.gothsBack!!){
+                this.finish()
+                handle.invoke(it)
+            }
         }
+
     }
 
     companion object{
-        private  lateinit var configDocument : ConfigDocument
+        private  var configDocument : ConfigDocument? = null
         private  lateinit var handle: (DocumentScannerResult?)-> Unit
+        private   var hasInit = false
 
         fun <TC : ConfigDocument>startActivity(context : Context, config:TC, handle: (DocumentScannerResult?)-> Unit){
-            configDocument = config
-            this.handle = handle
-            val intent = Intent()
-            intent.setClass(context, ScannerActivity::class.java)
-            context.startActivity(intent)
+            if(!hasInit){
+                configDocument = config
+                this.handle = handle
+                val intent = Intent()
+                intent.setClass(context, ScannerActivity::class.java)
+                context.startActivity(intent)
+                hasInit = true
+            }
+
         }
     }
 
@@ -54,5 +62,11 @@ class ScannerActivity  : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         scannerDocument.onResume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        hasInit = false
+        configDocument = null
     }
 }

@@ -24,15 +24,20 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:weightSum="2">
                 <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:scaleType="centerCrop"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+
                         android:layout_height="match_parent">
                     <ImageView
                             android:id="@+id/documentFront"
+                            android:src="@drawable/front_document"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
@@ -43,9 +48,12 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:scaleType="centerCrop"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_height="match_parent">
                     <ImageView
                             android:id="@+id/documentBack"
+                            android:src="@drawable/back_document"
                             android:layout_width="match_parent"
                             android:scaleType="centerCrop"
                             android:layout_height="match_parent" />
