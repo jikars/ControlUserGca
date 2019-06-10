@@ -11,6 +11,6 @@
     <color name="graybackgroundbutton">#E6E7EB</color>
     <color name="graytexthint">#c9c9c9</color>
     <color name="graytextready">#9c9c9c</color>5CFF0101
-    <color name="backgroundCrp">#c9c9c9</color>
+    <color name="backgroundCrp">#7E4CAF50</color>
 
 </resources>

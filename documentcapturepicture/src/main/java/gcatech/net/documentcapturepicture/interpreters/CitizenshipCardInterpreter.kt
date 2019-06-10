@@ -4,7 +4,7 @@ import gcatech.net.documentcapturepicture.documents.CitizenshipCard
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CitizenshipCardInterpreter : IInterpreter<CitizenshipCard> {
+class CitizenshipCardInterpreter : IInterpreter<CitizenshipCard>  {
 
     private var charsSpace  = arrayListOf("(\u0000){1,}")
     private var secuenceSubstring  = arrayListOf("O+","O-","B+","B-","A+","A-")
@@ -37,7 +37,7 @@ class CitizenshipCardInterpreter : IInterpreter<CitizenshipCard> {
 
         val lastName =  list?.get(0)?.split(cc!!)?.last() + " " +  list?.get(1)!!;
 
-        val firtName : String = list?.get(2)!! + " " +  if(list?.count()!! >= 4)  list?.get(3)!! else ""
+        val firstName : String = list?.get(2)!! + " " +  if(list?.count()!! >= 4)  list?.get(3)!! else ""
 
         val gender = lastMap!![1]
 
@@ -54,7 +54,7 @@ class CitizenshipCardInterpreter : IInterpreter<CitizenshipCard> {
         val citizenshipCardCol= CitizenshipCard()
 
         citizenshipCardCol.documentNumber = cc
-        citizenshipCardCol.firtsName = firtName
+        citizenshipCardCol.firtsName = firstName
         citizenshipCardCol.lastName = lastName
         citizenshipCardCol.gender = gender.toString()
         citizenshipCardCol.rh = rh

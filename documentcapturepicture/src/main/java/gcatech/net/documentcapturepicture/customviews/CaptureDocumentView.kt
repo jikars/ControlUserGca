@@ -10,11 +10,9 @@ import kotlinx.android.synthetic.main.scanner_document_view.view.*
 import android.support.annotation.LayoutRes
 import android.view.ViewTreeObserver
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import com.camerakit.CameraKitView
-import gcatech.net.documentcapturepicture.documents.ModelDocument
+import gcatech.net.documentcapturepicture.documents.Document
 import java.util.*
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.view.View
 import gcatech.net.documentcapturepicture.annotations.Key
 import gcatech.net.documentcapturepicture.annotations.MapValue
@@ -22,7 +20,7 @@ import gcatech.net.documentcapturepicture.enums.ScannerMode
 import gcatech.net.documentcapturepicture.interpreters.IInterpreter
 import gcatech.net.documentcapturepicture.webServices.IWebService
 import android.graphics.Matrix
-import com.camerakit.CameraKit
+import gcatech.net.documentcapturepicture.documents.DocumentScannerResult
 import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.createInstance
@@ -40,11 +38,14 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
     private  lateinit var  gothsFront : ViewGroup
     private  lateinit var  gothsBack : ViewGroup
     private  lateinit var  pictureBackBitMap : Bitmap
-    var  documentsScanner : MutableMap<ScannerMode,ModelDocument>
+    private var  documentsScanner : MutableMap<ScannerMode,Document>
     private  lateinit var  type : KClass<*>
-    private  var  hasFront: Boolean = true
+    private  lateinit var  typeInterpreter : Class<*>
+    private  lateinit var  webServiceType : Class<*>
+    private  var  hasFront: Boolean = false
     private  lateinit var  interpreterInstance : IInterpreter<*>
     private  lateinit var webServiceInstance : IWebService<*>
+    private  lateinit var handleResult: (DocumentScannerResult?)-> Unit
 
     init{
         LayoutInflater.from(context).inflate(R.layout.scanner_document_view, this, true)
@@ -53,30 +54,19 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
         assignableBitmap =  mutableMapOf()
         documentsScanner = mutableMapOf()
         if(assignableBitmap.isEmpty()){
-            assignableBitmap[true] = { bitmap :Bitmap->  assignableFront(bitmap) }
-            assignableBitmap[false] = { bitmap :Bitmap->  assignableBack(bitmap) }
-        }
-
-        btnFlash.setOnClickListener{
-            if(camera.flash == CameraKit.FLASH_OFF){
-                camera.flash = CameraKit.FLASH_ON
-            }
-            if(camera.flash == CameraKit.FLASH_ON){
-                camera.flash = CameraKit.FLASH_OFF
-            }
+            assignableBitmap[false] = { bitmap :Bitmap->  assignableFront(bitmap) }
+            assignableBitmap[true] = { bitmap :Bitmap->  assignableBack(bitmap) }
         }
     }
 
-    fun <T :ModelDocument,TInterpreter : IInterpreter<T>, TWebServer :IWebService<T>>config(type : KClass<T>, typeInterpreter : Class<TInterpreter>,webServiceType: Class<TWebServer>,
-                                                                @LayoutRes gothsFrontRes : Int, @LayoutRes gothsBackRes : Int ){
-        interpreterInstance = typeInterpreter.newInstance()
-        webServiceInstance = webServiceType.newInstance()
+
+    fun config(type : KClass<*>, typeInterpreter : Class<*>, webServiceType: Class<*>,
+               @LayoutRes gothsFrontRes : Int, @LayoutRes gothsBackRes : Int,  handleResult: (DocumentScannerResult?)-> Unit ){
+
         this.type = type
-
-        documentsScanner[ScannerMode.Ocr] = type.createInstance()
-        documentsScanner[ScannerMode.CodeBar] = type.createInstance()
-        documentsScanner[ScannerMode.WebService] = type.createInstance()
-
+        this.typeInterpreter = typeInterpreter
+        this.webServiceType = webServiceType
+        generateInstanceTypes()
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         if(inflater.inflate(gothsFrontRes, null) is ViewGroup){
@@ -87,8 +77,7 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
         }
 
         btnCapture.setOnClickListener {
-            camera.captureImage { _: CameraKitView, bytes: ByteArray ->
-                val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+            camera.takePicture {  bitmap ->
                 val width = bitmap.width
                 val height = bitmap.height
                 val scaleX = scannerContainer.width.toFloat() / bitmap.width.toFloat()
@@ -107,8 +96,33 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
                 resizedBitmap.recycle()
                 assignableBitmap.getValue(hasFront).invoke(bmp)
                 bmp.recycle()
-                hasFront = !hasFront
             }
+        }
+
+
+        btnFlash.setOnClickListener{
+            if(!camera.hasFlash){
+                camera.onFlash()
+            }
+            else{
+                camera.offFlash()
+            }
+        }
+
+        btnReady.setOnClickListener{
+            handleResult.invoke(DocumentScannerResult(documentsScanner,pictureFrontBitMap,pictureBackBitMap))
+        }
+
+        btnArrowRefresh.setOnClickListener{
+            hasFront = false
+            initialCharge()
+            generateInstanceTypes()
+            btnReady.visibility = View.GONE
+            btnCapture.visibility = View.VISIBLE
+        }
+
+        btnCancel.setOnClickListener{
+            this.handleResult.invoke(DocumentScannerResult(documentsScanner,null,null))
         }
 
         scannerContainer.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
@@ -128,28 +142,37 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
                 }
 
                 scannerContainer.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                val height = scannerContainer.height *0.8f
-                val wight = height*(1.54f/1f)
-                val layoutParams = gosh.layoutParams
-                layoutParams.height = height.toInt()
-                layoutParams.width = wight.toInt()
-                gosh.layoutParams = layoutParams
-                gothsFront.layoutParams = LayoutParams(MATCH_PARENT,MATCH_PARENT)
-                gothsBack.layoutParams = LayoutParams(MATCH_PARENT,MATCH_PARENT)
-                previewImage.layoutParams.height = height.toInt()
-                previewImage.layoutParams.width = wight.toInt()
-                gosh.addView(gothsFront)
-                gosh.addView(gothsBack)
-                gothsFront.visibility = View.VISIBLE
-                gothsBack.visibility = View.INVISIBLE
-                camera.aspectRatio = scannerContainer.height.toFloat()/scannerContainer.width.toFloat()
-                previewImage.visibility =  View.INVISIBLE
+                initialCharge()
             }
         })
     }
 
+    private fun  initialCharge(){
+        val height = scannerContainer.height *0.8f
+        val wight = height*(1.54f/1f)
+        val layoutParams = gosh.layoutParams
+        layoutParams.height = height.toInt()
+        layoutParams.width = wight.toInt()
+        gosh.layoutParams = layoutParams
+        gothsFront.layoutParams = LayoutParams(MATCH_PARENT,MATCH_PARENT)
+        gothsBack.layoutParams = LayoutParams(MATCH_PARENT,MATCH_PARENT)
+        gosh.addView(gothsFront)
+        gosh.addView(gothsBack)
+        gothsFront.visibility = View.VISIBLE
+        gothsBack.visibility = View.INVISIBLE
+    }
+
+    private fun generateInstanceTypes(){
+        interpreterInstance = typeInterpreter.newInstance() as IInterpreter<*>
+        webServiceInstance = webServiceType.newInstance() as IWebService<*>
+        documentsScanner[ScannerMode.Ocr] = type.createInstance() as Document
+        documentsScanner[ScannerMode.CodeBar] = type.createInstance() as Document
+        documentsScanner[ScannerMode.WebService] = type.createInstance() as Document
+    }
+
     private fun assignableFront (bitmap:Bitmap)
     {
+        hasFront = true
         pictureFrontBitMap = bitmap
         elementDocumentFront.forEach{
             it.crop(pictureFrontBitMap,this,true)
@@ -165,6 +188,8 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
         elementDocumentBack.forEach{
             it.crop(pictureBackBitMap,this,false)
         }
+        btnReady.visibility = View.VISIBLE
+        btnCapture.visibility = View.GONE
     }
 
     override fun scanOcrResult(isFront :Boolean,ocr:String?, propName : String) {
@@ -188,9 +213,6 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
         }
     }
 
-    fun onStart(){
-        camera.onStart()
-    }
 
     fun onResume(){
         camera.onResume()
@@ -200,11 +222,7 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
         camera.onPause()
     }
 
-    fun onStop(){
-        camera.onStop()
-    }
-
-    fun onRequestPermissionResult(requestCode :Int, permissions : Array<out String>, grantResults: IntArray){
-        camera.onRequestPermissionsResult(requestCode,permissions,grantResults)
+    fun onRequestPermissionResult(requestCode :Int, grantResults: IntArray){
+        camera.onRequestPermissionsResult(requestCode,grantResults)
     }
 }

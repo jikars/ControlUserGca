@@ -1,7 +1,7 @@
 package gcatech.net.documentcapturepicture.interpreters
 
-import gcatech.net.documentcapturepicture.documents.ModelDocument
+import gcatech.net.documentcapturepicture.documents.Document
 
-interface IInterpreter<T: ModelDocument> {
+interface IInterpreter<T: Document> {
     fun builder(value : String) : T
 }

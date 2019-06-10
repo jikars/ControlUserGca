@@ -1,14 +1,13 @@
 package gcatech.net.documentcapturepicture.customviews
 
-import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import gcatech.net.documentcapturepicture.R
-import gcatech.net.documentcapturepicture.annotations.Key
 import gcatech.net.documentcapturepicture.annotations.LabelTitle
-import gcatech.net.documentcapturepicture.documents.ModelDocument
+import gcatech.net.documentcapturepicture.documents.Document
 import gcatech.net.documentcapturepicture.enums.ScannerMode
 import kotlinx.android.synthetic.main.capture_document_view.view.*
 import kotlin.reflect.KClass
@@ -20,16 +19,16 @@ class DocumentEditionView @JvmOverloads  constructor(context: Context?, attrs: A
     : RelativeLayout(context,attrs,defStyleAttr) {
 
     private var inputFieldDocumentViews : ArrayList<InputFieldView>
-    private lateinit var  scannerResults : MutableMap<ScannerMode, ModelDocument>
+    private var  scannerResults : MutableMap<ScannerMode, Document>? = null
     private lateinit var  type : KClass<*>
 
     init{
-        LayoutInflater.from(context).inflate(R.layout.scanner_document_view, this, true)
+        LayoutInflater.from(context).inflate(R.layout.document_edit_view, this, true)
         inputFieldDocumentViews = arrayListOf()
     }
 
 
-    fun  <T:ModelDocument >start (type:KClass<T>, scannerResults : MutableMap<ScannerMode, ModelDocument>){
+    fun start (type:KClass<*>, scannerResults : MutableMap<ScannerMode, Document>?, bitmapFront : Bitmap?, bitmapBack : Bitmap?){
         this.type = type
         this.scannerResults = scannerResults
 
@@ -43,9 +42,18 @@ class DocumentEditionView @JvmOverloads  constructor(context: Context?, attrs: A
             if (it is KMutableProperty<*>) {
                 val field = InputFieldView(context,null)
                 val  list : MutableMap<ScannerMode,String?> = mutableMapOf()
-                list[ScannerMode.CodeBar] = it.getter.call(scannerResults[ScannerMode.CodeBar])?.toString()
-                list[ScannerMode.Ocr] = it.getter.call(scannerResults[ScannerMode.Ocr])?.toString()
-                list[ScannerMode.WebService] = it.getter.call(scannerResults[ScannerMode.WebService])?.toString()
+                if(this.scannerResults!![ScannerMode.Ocr] != null){
+                    list[ScannerMode.Ocr] = it.getter.call(scannerResults!![ScannerMode.Ocr])?.toString()
+                }
+                if(this.scannerResults!![ScannerMode.WebService] != null){
+                    list[ScannerMode.WebService] = it.getter.call(scannerResults!![ScannerMode.WebService])?.toString()
+                }
+                if(this.scannerResults!![ScannerMode.CodeBar] != null){
+                    list[ScannerMode.CodeBar] = it.getter.call(scannerResults!![ScannerMode.CodeBar])?.toString()
+                }
+                else{
+
+                }
                 field.start(this,list,it.name,it.findAnnotation<LabelTitle>()?.labelValue)
                 if(!inputFieldDocumentViews.contains(field)){
                     inputFieldDocumentViews.add(field)

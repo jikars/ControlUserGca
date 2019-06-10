@@ -16,11 +16,11 @@ class OcrScannerFireBase : IOcrScanner {
         detectorOcr.processImage(image)
             .addOnSuccessListener { textResult ->
                 if(textResult != null && !textResult.text.isNullOrEmpty()){
-                    resultOcr.resulOcr(textResult.text)
+                    resultOcr.resultOcr(textResult.text)
                 }
             }
             .addOnFailureListener {
-                resultOcr.resulOcr(null)
+                resultOcr.resultOcr(null)
             }
     }
 }

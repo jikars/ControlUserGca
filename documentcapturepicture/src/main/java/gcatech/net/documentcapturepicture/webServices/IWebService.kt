@@ -1,7 +1,7 @@
 package gcatech.net.documentcapturepicture.webServices
 
-import gcatech.net.documentcapturepicture.documents.ModelDocument
+import gcatech.net.documentcapturepicture.documents.Document
 
-interface IWebService<T : ModelDocument> {
+interface IWebService<T : Document> {
     fun getDocument(value : Any?) : T
 }

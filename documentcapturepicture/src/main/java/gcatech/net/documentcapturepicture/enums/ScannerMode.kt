@@ -1,5 +1,7 @@
 package gcatech.net.documentcapturepicture.enums
 
-enum class ScannerMode(val labelText: String) {
+import java.io.Serializable
+
+enum class ScannerMode(val labelText: String) : Serializable {
     CodeBar("Codebar"), Ocr("Ocr"), WebService("Webservice")
 }
