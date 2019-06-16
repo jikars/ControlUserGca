@@ -14,6 +14,7 @@ import android.widget.RelativeLayout
 import kotlinx.android.synthetic.main.camera_view.view.*
 import gcatech.net.documentcapturepicture.R
 import gcatech.net.documentcapturepicture.utils.UiTools
+import kotlinx.android.synthetic.main.scanner_document_view.view.*
 import java.util.logging.Logger
 
 
@@ -105,8 +106,8 @@ class ScannerCameraView @JvmOverloads  constructor(context: Context?, attrs: Att
 
     private fun startCamera(){
         if(frameCameraPreview.childCount>0){
+            camera.release()
             frameCameraPreview.removeAllViews()
-
         }
         camera = Camera.open()
 
