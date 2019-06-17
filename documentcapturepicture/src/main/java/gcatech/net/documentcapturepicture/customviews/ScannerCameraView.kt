@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package gcatech.net.documentcapturepicture.customviews
 
 import android.Manifest
@@ -14,10 +16,10 @@ import android.widget.RelativeLayout
 import kotlinx.android.synthetic.main.camera_view.view.*
 import gcatech.net.documentcapturepicture.R
 import gcatech.net.documentcapturepicture.utils.UiTools
-import kotlinx.android.synthetic.main.scanner_document_view.view.*
 import java.util.logging.Logger
 
 
+@Suppress("DEPRECATION")
 class ScannerCameraView @JvmOverloads  constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int = 0 )
 : RelativeLayout(context,attrs,defStyleAttr) {
 

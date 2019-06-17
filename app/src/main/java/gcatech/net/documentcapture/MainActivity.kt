@@ -6,14 +6,10 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
-import gcatech.net.documentcapturepicture.config.CitezenshipCardConfig
 import gcatech.net.documentcapturepicture.fragments.DocumentScannerFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import org.json.JSONObject
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-
-
+import gcatech.net.documentcapturepicture.config.ConfigDocuments
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,18 +23,22 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
         startScanningCC.setOnClickListener{
             it.visibility = View.GONE
-            val fragment = DocumentScannerFragment.newInstance(CitezenshipCardConfig()){
-                val gsonb = GsonBuilder()
-                val gson = gsonb.create()
-                val jsonInString = gson.toJson(it)
+            val fragment = DocumentScannerFragment.newInstance(ConfigDocuments.CitizenshipCardConfig,{itDocument->
+                val jsonInString = GsonBuilder().create().toJson(itDocument)
                 Toast.makeText(this,jsonInString, Toast.LENGTH_LONG).show()
-            }
+            },{itFragment ->
+                it.visibility = View.VISIBLE
+                val transaction = supportFragmentManager.beginTransaction()
+                transaction.remove(itFragment)
+                transaction.commit()
+                containFragment.visibility = View.GONE
+            })
             if(fragment != null){
+                containFragment.visibility = View.VISIBLE
                 val transaction = supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.containFragment, fragment)
                 transaction.commit()
             }
         }
-
     }
 }

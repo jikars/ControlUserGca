@@ -39,7 +39,7 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
     private  lateinit var  gothsFront : ViewGroup
     private  lateinit var  gothsBack : ViewGroup
     private  lateinit var  pictureBackBitMap : Bitmap
-    private var  documentsScanner : MutableMap<ScannerMode,Document>
+    private var  documentsScanner : MutableMap<ScannerMode,Document?>
     private  lateinit var  type : KClass<*>
     private  lateinit var  typeInterpreter : Class<*>
     private  lateinit var  webServiceType : Class<*>
@@ -130,19 +130,21 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
 
         scannerContainer.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
-                for (i in 0 until gothsFront.childCount){
-                    val documentMapper = gothsFront.getChildAt(i)
-                    if(documentMapper is MappingRectangleCustomView){
-                        elementDocumentFront.add(documentMapper)
+                DoAsync({
+                    for (i in 0 until gothsFront.childCount){
+                        val documentMapper = gothsFront.getChildAt(i)
+                        if(documentMapper is MappingRectangleCustomView){
+                            elementDocumentFront.add(documentMapper)
+                        }
                     }
-                }
 
-                for (i in 0 until gothsBack.childCount){
-                    val documentMapper = gothsBack.getChildAt(i)
-                    if(documentMapper is MappingRectangleCustomView){
-                        elementDocumentBack.add(documentMapper)
+                    for (i in 0 until gothsBack.childCount){
+                        val documentMapper = gothsBack.getChildAt(i)
+                        if(documentMapper is MappingRectangleCustomView){
+                            elementDocumentBack.add(documentMapper)
+                        }
                     }
-                }
+                },{}).execute()
 
                 scannerContainer.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 initialCharge()
@@ -153,30 +155,34 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
     }
 
     private fun  initialCharge(){
-        val height = scannerContainer.height *0.8f
-        val wight = height*(1.54f/1f)
         val layoutParams = gosh.layoutParams
-        layoutParams.height = height.toInt()
-        layoutParams.width = wight.toInt()
-        gosh.layoutParams = layoutParams
-        gothsFront.layoutParams = LayoutParams(MATCH_PARENT,MATCH_PARENT)
-        gothsBack.layoutParams = LayoutParams(MATCH_PARENT,MATCH_PARENT)
-        gosh.removeAllViews()
-        gosh.addView(gothsFront)
-        gosh.addView(gothsBack)
-        gothsFront.visibility = View.VISIBLE
-        gothsBack.visibility = View.INVISIBLE
+        DoAsync({
+            val height = scannerContainer.height *0.8f
+            val wight = height*(1.54f/1f)
+            layoutParams.height = height.toInt()
+            layoutParams.width = wight.toInt()
+        }, {
+            gosh.layoutParams = layoutParams
+            gothsFront.layoutParams = LayoutParams(MATCH_PARENT,MATCH_PARENT)
+            gothsBack.layoutParams = LayoutParams(MATCH_PARENT,MATCH_PARENT)
+            gosh.removeAllViews()
+            gosh.addView(gothsFront)
+            gosh.addView(gothsBack)
+            gothsFront.visibility = View.VISIBLE
+            gothsBack.visibility = View.INVISIBLE}).execute()
     }
 
     private fun generateInstanceTypes(){
-        DoAsync{
+        DoAsync({
             interpreterInstance = typeInterpreter.newInstance() as IInterpreter<*>
             webServiceInstance = webServiceType.newInstance() as IWebService<*>
             documentsScanner[ScannerMode.Ocr] = type.createInstance() as Document
-            documentsScanner[ScannerMode.CodeBar] = type.createInstance() as Document
-            documentsScanner[ScannerMode.WebService] = type.createInstance() as Document
-        }.execute()
+            documentsScanner[ScannerMode.CodeBar] = null
+            documentsScanner[ScannerMode.WebService] = null
+        },{}).execute()
     }
+
+
 
     private fun assignableFront (bitmap:Bitmap)
     {
@@ -207,18 +213,24 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
             field.isAccessible = true
             if (field is KMutableProperty<*>) {
                 field.setter.call(documentsScanner[ScannerMode.Ocr], ocr)
-                if( field.findAnnotation<Key>() != null)
+                if( field.findAnnotation<Key>() != null && documentsScanner[ScannerMode.CodeBar] == null )
                 {
-                    documentsScanner[ScannerMode.WebService] = webServiceInstance.getDocument(ocr)
+                    documentsScanner[ScannerMode.WebService] = documentsScanner[ScannerMode.Ocr]
                 }
             }
         }
     }
 
+
     override fun scanCodeBarResult(codeBar: String?) {
         if(!codeBar.isNullOrEmpty()){
             val obj = interpreterInstance.builder(codeBar)
             documentsScanner[ScannerMode.CodeBar] = obj
+            val field = type.declaredMemberProperties .first { it.findAnnotation<Key>() != null }
+            field.isAccessible = true
+            if (field is KMutableProperty<*> &&  field.findAnnotation<Key>() != null ) {
+                documentsScanner[ScannerMode.WebService] = obj
+            }
         }
     }
 

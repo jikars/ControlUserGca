@@ -9,6 +9,7 @@
             android:id="@+id/documentEditView"
             android:layout_width="match_parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/btnConfirm"
             android:layout_height="0dp"/>
 
@@ -19,6 +20,7 @@
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
+            android:visibility="gone"
             android:text="@string/accpet"
     />
     <Button android:id="@+id/btnCancel"
@@ -27,6 +29,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginEnd="10dp"
+            android:visibility="gone"
             android:layout_marginBottom="10dp"
             android:text="@string/cancelar"
     />

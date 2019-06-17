@@ -36,7 +36,7 @@ class ScannerActivity  : AppCompatActivity() {
         private  lateinit var handle: (DocumentScannerResult?)-> Unit
         private   var hasInit = false
 
-        fun <TC : ConfigDocument>startActivity(context : Context, config:TC, handle: (DocumentScannerResult?)-> Unit){
+        fun startActivity(context : Context, config: ConfigDocument, handle: (DocumentScannerResult?)-> Unit){
             if(!hasInit){
                 configDocument = config
                 this.handle = handle
@@ -48,6 +48,7 @@ class ScannerActivity  : AppCompatActivity() {
 
         }
     }
+
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)

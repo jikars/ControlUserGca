@@ -6,12 +6,10 @@ import android.util.AttributeSet
 import android.widget.RelativeLayout
 import gcatech.net.documentcapturepicture.R
 import gcatech.net.documentcapturepicture.enums.ScannerMode
-import gcatech.net.documentcapturepicture.scanners.codeBar.CodeBarFireBase
-import gcatech.net.documentcapturepicture.scanners.codeBar.ICodeBarScanner
-import gcatech.net.documentcapturepicture.scanners.codeBar.IResultCodeBar
 import gcatech.net.documentcapturepicture.scanners.ocr.IOcrScanner
 import gcatech.net.documentcapturepicture.scanners.ocr.IResultOcr
 import gcatech.net.documentcapturepicture.scanners.ocr.OcrScannerFireBase
+import gcatech.net.documentcapturepicture.scanners.codeBar.*
 
 
 class MappingRectangleCustomView   @JvmOverloads  constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int = 0 )
@@ -29,6 +27,7 @@ class MappingRectangleCustomView   @JvmOverloads  constructor(context: Context?,
     private  lateinit  var   notify:INotifyCompleteScanner
     private   var   codeBarScanner: ICodeBarScanner = CodeBarFireBase()
     private   var   isFront = false
+    private  lateinit var bitmapPattern : Bitmap
 
     init{
         val attributes  = context?.obtainStyledAttributes(attrs, R.styleable.MappingRectangleCustomView)
@@ -43,6 +42,7 @@ class MappingRectangleCustomView   @JvmOverloads  constructor(context: Context?,
 
     fun crop(bitmapPattern : Bitmap, notify: INotifyCompleteScanner, isFront : Boolean ){
       try{
+          this.bitmapPattern = bitmapPattern
           this.notify = notify
           this.isFront = isFront
           bitmapCrop = Bitmap.createBitmap(

@@ -18,10 +18,12 @@ class DocumentScannerFragment   : Fragment() {
         private var config : ConfigDocument? = null
         private var fragment : DocumentScannerFragment? = null
         private lateinit var type : KClass<*>
-        private lateinit var handle: (Document)-> Unit
-        fun <TC :ConfigDocument>newInstance(config:TC,handle: (Document)-> Unit): DocumentScannerFragment? {
+        private lateinit var handleConfirm: (Document)-> Unit
+        private lateinit var handleCancel: (Fragment)-> Unit
+        fun newInstance(config: ConfigDocument, handle: (Document)-> Unit,handleCancel: (Fragment)-> Unit): DocumentScannerFragment? {
             if(fragment == null && this.config == null){
-                this.handle = handle
+                this.handleConfirm = handle
+                this.handleCancel = handleCancel
                 fragment = DocumentScannerFragment()
                 this.config = config
                 this.type = config.type
@@ -39,20 +41,23 @@ class DocumentScannerFragment   : Fragment() {
         super.onCreate(savedInstanceState)
         if (activity != null && config != null) {
             ScannerActivity.startActivity(activity!!, config!!) {
+                documentEditView.visibility = View.VISIBLE
+                btnCancel.visibility = View.VISIBLE
+                btnConfirm.visibility = View.VISIBLE
                 documentEditView?.start(type, it?.scannerResults, it?.bitmapFront, it?.bitmapBack)
             }
 
         }
-
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btnConfirm.setOnClickListener{
-            handle.invoke(documentEditView.buildDocument())
+            handleConfirm.invoke(documentEditView.buildDocument())
         }
         btnCancel.setOnClickListener{
-            activity?.finish()
+            handleCancel.invoke(this)
         }
     }
 

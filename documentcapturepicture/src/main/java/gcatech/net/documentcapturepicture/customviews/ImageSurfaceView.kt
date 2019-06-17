@@ -1,13 +1,18 @@
+@file:Suppress("DEPRECATION")
+
 package gcatech.net.documentcapturepicture.customviews
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.hardware.Camera
+import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import java.io.IOException
 
 
-class ImageSurfaceView(context: Context, private val camera: Camera) : SurfaceView(context), SurfaceHolder.Callback {
+@SuppressLint("ViewConstructor")
+class ImageSurfaceView  (context: Context, private val camera: Camera) : SurfaceView(context), SurfaceHolder.Callback {
     private val surfaceHolder: SurfaceHolder = holder
     init {
         this.surfaceHolder.addCallback(this)
@@ -18,7 +23,7 @@ class ImageSurfaceView(context: Context, private val camera: Camera) : SurfaceVi
             this.camera.setPreviewDisplay(holder)
             this.camera.startPreview()
         } catch (e: IOException) {
-            e.printStackTrace()
+            Log.i(e.message,e.printStackTrace().toString())
         }
 
     }
@@ -32,7 +37,7 @@ class ImageSurfaceView(context: Context, private val camera: Camera) : SurfaceVi
             this.camera.stopPreview()
             this.camera.release()
         } catch (e: IOException) {
-            e.printStackTrace()
+            Log.i(e.message,e.printStackTrace().toString())
         }
     }
 }

@@ -8,6 +8,7 @@
 
 
     <RelativeLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/containFragment"/>
@@ -19,6 +20,6 @@
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:id="@+id/startScanningCC"
-            android:text="ScannerCC"/>
+            android:text="Scanear Cedula"/>
 
 </android.support.constraint.ConstraintLayout>

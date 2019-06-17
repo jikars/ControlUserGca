@@ -20,7 +20,7 @@ class DocumentEditionView @JvmOverloads  constructor(context: Context?, attrs: A
     : RelativeLayout(context,attrs,defStyleAttr) {
 
     private var inputFieldDocumentViews : ArrayList<InputFieldView>
-    private var  scannerResults : MutableMap<ScannerMode, Document>? = null
+    private var  scannerResults : MutableMap<ScannerMode, Document?>? = null
     private lateinit var  type : KClass<*>
 
     init{
@@ -29,7 +29,7 @@ class DocumentEditionView @JvmOverloads  constructor(context: Context?, attrs: A
     }
 
 
-    fun start (type:KClass<*>, scannerResults : MutableMap<ScannerMode, Document>?, bitmapFront : Bitmap?, bitmapBack : Bitmap?){
+    fun start (type:KClass<*>, scannerResults : MutableMap<ScannerMode, Document?>?, bitmapFront : Bitmap?, bitmapBack : Bitmap?){
         this.type = type
         this.scannerResults = scannerResults
 
