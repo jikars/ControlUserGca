@@ -48,6 +48,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.3.31"
     implementation 'me.dm7.barcodescanner:zbar:1.9.13'
     implementation 'com.google.zxing:core:3.2.0'
+    implementation 'com.google.android.gms:play-services-vision:11.8.0'
     implementation('com.microblink:pdf417.mobi:7.2.0@aar') {
         transitive = true
     }
