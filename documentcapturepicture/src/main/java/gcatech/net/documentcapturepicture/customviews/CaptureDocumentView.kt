@@ -157,8 +157,8 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
     private fun  initialCharge(){
         val layoutParams = gosh.layoutParams
         DoAsync({
-            val height = scannerContainer.height *0.8f
-            val wight = height*(1.54f/1f)
+            val height = scannerContainer.height *0.7f
+            val wight = height*(1.6f/1f)
             layoutParams.height = height.toInt()
             layoutParams.width = wight.toInt()
         }, {
