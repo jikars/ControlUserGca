@@ -25,7 +25,7 @@ class MappingRectangleCustomView   @JvmOverloads  constructor(context: Context?,
     private  var  mappingTypes : MutableMap<ScannerMode,(Bitmap?) -> Unit>
     private   var   ocrScanner: IOcrScanner = OcrScannerFireBase()
     private  lateinit  var   notify:INotifyCompleteScanner
-    private   var   codeBarScanner: ICodeBarScanner = CodeBarGoogleServices()
+    private   var   codeBarScanner: ICodeBarScanner = CodeBarFireBase()
     private   var   isFront = false
     private  lateinit var bitmapPattern : Bitmap
 
