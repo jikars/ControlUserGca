@@ -25,6 +25,8 @@ class CodeBarFireBase : ICodeBarScanner {
             result.addOnSuccessListener { barcode  ->
                 if(barcode?.size!! > 0){
                     resultCodeBar.resultCodeBar(barcode[0].rawValue)
+                }else{
+                    resultCodeBar.resultCodeBar(null)
                 }
             }.addOnFailureListener {
                 resultCodeBar.resultCodeBar(null)

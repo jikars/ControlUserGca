@@ -1,10 +1,10 @@
 package gcatech.net.documentcapturepicture.fragments
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import gcatech.net.documentcapturepicture.R
 import gcatech.net.documentcapturepicture.activities.ScannerActivity
 import gcatech.net.documentcapturepicture.config.ConfigDocument

@@ -8,11 +8,11 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.hardware.Camera
-import android.support.v4.app.ActivityCompat.requestPermissions
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
+import androidx.core.app.ActivityCompat.requestPermissions
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.camera_view.view.*
 import gcatech.net.documentcapturepicture.R
 import gcatech.net.documentcapturepicture.utils.UiTools

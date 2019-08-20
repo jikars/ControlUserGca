@@ -56,7 +56,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginBottom="10dp"
     >
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnFlash"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -67,7 +67,7 @@
                 app:backgroundTint="#b0595959"
                 app:pressedTranslationZ="12dp"/>
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnArrowRefresh"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -87,7 +87,7 @@
             android:layout_height="match_parent">
 
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnCancel"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true">
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     app:fabSize="normal"
@@ -118,7 +118,7 @@
                     android:layout_centerHorizontal="true"
                     app:backgroundTint="#b0595959"
                     app:elevation="2dp"/>
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     app:fabSize="normal"
@@ -140,7 +140,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="10dp"
         >
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     app:fabSize="normal"

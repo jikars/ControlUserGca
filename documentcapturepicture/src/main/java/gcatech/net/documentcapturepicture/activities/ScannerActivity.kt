@@ -2,11 +2,11 @@ package gcatech.net.documentcapturepicture.activities
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.Window
 import android.view.WindowManager
 import gcatech.net.documentcapturepicture.R
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import gcatech.net.documentcapturepicture.config.ConfigDocument
 import gcatech.net.documentcapturepicture.documents.DocumentScannerResult
 import kotlinx.android.synthetic.main.scanner_activity.*

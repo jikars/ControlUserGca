@@ -35,7 +35,7 @@ class CitizenshipCardInterpreter : IInterpreter<CitizenshipCard>  {
 
         val lastMap = list?.last()
 
-        val lastName =  list?.get(0)?.split(cc!!)?.last() + " " +  list?.get(1)!!;
+        val lastName =  list?.get(0)?.split(cc!!)?.last() + " " +  list?.get(1)!!
 
         val firstName : String = list?.get(2)!! + " " +  if(list?.count()!! >= 4)  list?.get(3)!! else ""
 

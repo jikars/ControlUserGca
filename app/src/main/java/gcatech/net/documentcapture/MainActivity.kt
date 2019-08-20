@@ -1,11 +1,11 @@
 package gcatech.net.documentcapture
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import gcatech.net.documentcapturepicture.fragments.DocumentScannerFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import com.google.gson.GsonBuilder
