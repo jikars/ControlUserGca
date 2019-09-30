@@ -3,17 +3,17 @@ package gcatech.net.documentcapturepicture.scanners.codeBar
 import android.graphics.Bitmap
 import com.google.zxing.*
 import com.google.zxing.common.HybridBinarizer
+import com.google.zxing.datamatrix.DataMatrixReader
 
 
 class CodeBarZxing : ICodeBarScanner {
 
-    private  val scanner  = MultiFormatReader()
+    private  val scanner  = DataMatrixReader()
 
 
     override fun scan(bitmap: Bitmap, resultCodeBar: IResultCodeBar) {
-        try{
 
-            val aspectRatio = bitmap.width / bitmap.height as Float
+            val aspectRatio = bitmap.width / bitmap.height.toFloat()
             val width = 480
             val height = Math.round(width / aspectRatio)
 
@@ -29,10 +29,6 @@ class CodeBarZxing : ICodeBarScanner {
             if(result  != null){
                 resultCodeBar.resultCodeBar(result.text)
             }
-        }
-        catch ( e : NotFoundException) { e.printStackTrace() }
-        catch ( e : ChecksumException) { e.printStackTrace() }
-        catch ( e : FormatException) { e.printStackTrace() }
     }
 
 }

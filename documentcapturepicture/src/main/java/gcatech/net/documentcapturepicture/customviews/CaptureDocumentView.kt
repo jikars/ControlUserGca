@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import gcatech.net.documentcapturepicture.R
 import kotlinx.android.synthetic.main.scanner_document_view.view.*
-import android.support.annotation.LayoutRes
 import android.view.ViewTreeObserver
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import gcatech.net.documentcapturepicture.documents.Document
@@ -20,6 +19,7 @@ import gcatech.net.documentcapturepicture.enums.ScannerMode
 import gcatech.net.documentcapturepicture.interpreters.IInterpreter
 import gcatech.net.documentcapturepicture.webServices.IWebService
 import android.graphics.Matrix
+import androidx.annotation.LayoutRes
 import gcatech.net.documentcapturepicture.documents.DocumentScannerResult
 import gcatech.net.documentcapturepicture.utils.DoAsync
 import kotlin.reflect.KClass
@@ -62,7 +62,7 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
 
 
     fun config(type : KClass<*>, typeInterpreter : Class<*>, webServiceType: Class<*>,
-               @LayoutRes gothsFrontRes : Int, @LayoutRes gothsBackRes : Int,  handleResult: (DocumentScannerResult?)-> Unit ){
+               @LayoutRes gothsFrontRes : Int, @LayoutRes gothsBackRes : Int, handleResult: (DocumentScannerResult?)-> Unit ){
 
         this.type = type
         this.typeInterpreter = typeInterpreter
@@ -157,8 +157,8 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
     private fun  initialCharge(){
         val layoutParams = gosh.layoutParams
         DoAsync({
-            val height = scannerContainer.height *0.8f
-            val wight = height*(1.54f/1f)
+            val height = scannerContainer.height *0.7f
+            val wight = height*(1.6f/1f)
             layoutParams.height = height.toInt()
             layoutParams.width = wight.toInt()
         }, {
@@ -203,8 +203,7 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
         elementDocumentBack.forEach{
             it.crop(pictureBackBitMap,this,false)
         }
-        btnReady.visibility = View.VISIBLE
-        btnCapture.visibility = View.GONE
+
     }
 
     override fun scanOcrResult(isFront :Boolean,ocr:String?, propName : String) {
@@ -223,7 +222,7 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
 
 
     override fun scanCodeBarResult(codeBar: String?) {
-        if(!codeBar.isNullOrEmpty()){
+        if(!codeBar.isNullOrBlank() &&  !codeBar.isNullOrEmpty()){
             val obj = interpreterInstance.builder(codeBar)
             documentsScanner[ScannerMode.CodeBar] = obj
             val field = type.declaredMemberProperties .first { it.findAnnotation<Key>() != null }
@@ -232,6 +231,8 @@ class CaptureDocumentView @JvmOverloads  constructor(context: Context?, attrs: A
                 documentsScanner[ScannerMode.WebService] = obj
             }
         }
+        btnReady.visibility = View.VISIBLE
+        btnCapture.visibility = View.GONE
     }
 
 

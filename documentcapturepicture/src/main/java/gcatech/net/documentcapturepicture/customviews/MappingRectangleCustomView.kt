@@ -11,7 +11,6 @@ import gcatech.net.documentcapturepicture.scanners.ocr.IResultOcr
 import gcatech.net.documentcapturepicture.scanners.ocr.OcrScannerFireBase
 import gcatech.net.documentcapturepicture.scanners.codeBar.*
 
-
 class MappingRectangleCustomView   @JvmOverloads  constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int = 0 )
     : RelativeLayout(context,attrs,defStyleAttr), IResultCodeBar,IResultOcr {
 
@@ -54,7 +53,8 @@ class MappingRectangleCustomView   @JvmOverloads  constructor(context: Context?,
           )
 
           if(isCodeBarScanner && !isFingerPrint){
-              scanForCodeBar(bitmapCrop)
+
+              scanForCodeBar(bitmapPattern)
           }
           else if(!isFingerPrint){
 
@@ -68,8 +68,8 @@ class MappingRectangleCustomView   @JvmOverloads  constructor(context: Context?,
 
 
     private fun scanForCodeBar(bitmap: Bitmap?){
-        if(isCodeBarScanner && bitmap != null){
-            codeBarScanner.scan(bitmap,this)
+       if(isCodeBarScanner && bitmap != null){
+           codeBarScanner.scan(bitmap,this)
         }
     }
 
@@ -80,10 +80,10 @@ class MappingRectangleCustomView   @JvmOverloads  constructor(context: Context?,
     }
 
     override fun resultCodeBar(result: String?) {
-        if(!result.isNullOrEmpty()){
+       if(!result.isNullOrEmpty()){
             value = result
-            notify.scanCodeBarResult(value)
         }
+        notify.scanCodeBarResult(value)
     }
 
     override fun resultOcr(result: String?) {

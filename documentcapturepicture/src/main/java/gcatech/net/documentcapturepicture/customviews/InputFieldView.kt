@@ -1,10 +1,10 @@
 package gcatech.net.documentcapturepicture.customviews
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import gcatech.net.documentcapturepicture.R
 import gcatech.net.documentcapturepicture.enums.ScannerMode
 import kotlinx.android.synthetic.main.input_field_view.view.*
